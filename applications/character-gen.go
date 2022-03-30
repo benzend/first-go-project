@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
-func NumberGenApp() {
+func CharacterGenApp() {
 	fmt.Println("Welcome to the number gen application!")
+	
 }

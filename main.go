@@ -10,7 +10,7 @@ type App struct {
 	fn func()
 }
 
-var apps = []App{{name: "tickets", fn: applications.TicketApp}, {name: "number-gen", fn: applications.NumberGenApp}}
+var apps = []App{{name: "tickets", fn: applications.TicketApp}, {name: "number-gen", fn: applications.CharacterGenApp}}
 
 func main() {
 	app := getChosenApp()
