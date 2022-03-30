@@ -1,0 +1,187 @@
+** Variable assigning **
+
+* var * for mutability
+* const * for immutability
+* := * shortcut for mutability
+
+ex: 
+var name = "Ben"
+const lastname = "Round"
+middlename := "Bernard"
+
+
+
+** Multiple data types for integers **
+
+ex: uint uint8 uint16 uint32 float
+
+Unsigned/signed just means validated
+
+
+
+** Pointers **
+
+Go has pointers which allow you to reference the * memory address * using the & sign
+
+ex:
+name := "ben"
+fmt.Print(&name)
+
+
+
+** Assigning arrays **
+
+var myArray = [<max_size>]type{<...initializers[]>}
+
+ex: 
+var myArray [3]string{"Betty", "George", "Fred"}
+
+
+
+** Slices vs arrays **
+
+Slices don't have a fixed length, Arrays do
+
+A slice is defined by putting nothing in where <max_size> should go in an Array
+
+ex:
+var mySlice []string{<...initializers[]>}
+
+
+
+** Loops **
+
+There is only one loop, * for *. 
+
+* for * without any args is an infinitely running loop (think * while * loop in JS)
+
+ex:
+for {
+  // our repeating code here 
+}
+
+* for * with args 
+
+items := []string{"item1", "item2", "item3"}
+
+for index, item := range items {
+  // code for each item
+}
+
+
+
+** Unused variables **
+
+To stop go from complaining, replace the variable with _ 
+
+ex: for index, item := range items ----> for _, item := range items
+
+
+
+** func typings ** 
+
+func (<... arg types[]>) (<... return types[]>) {}
+
+ex:
+func (name string, description string) (string, string) {
+  return name, description
+}
+
+
+** Maps **
+
+A map is conceptually an object (key->value pairs)
+
+initialize a map
+
+var mymap = make(map[string]string)
+
+initialize a slice of maps
+
+var mymapArr = make([]map[string]string, 0)
+
+
+
+** Structs **
+
+A structure that allows typing (think of TS interface)
+
+ex:
+type MyData struct {
+  name string
+  email string
+  tickets uint
+}
+
+
+
+** Heaps **
+
+There is the Stack and then there is the Heap.
+
+An example of when the heap is needed is if 
+you were to do this:
+
+```go
+package main
+
+import "fmt"
+
+type person struct {
+  name string 
+  age int 
+}
+
+func initPerson() *person {
+  m := person{name: "none", age: 50}
+  return &m // BAD We are return a reference to a scoped function
+}
+
+func main() {
+  initPerson()
+}
+```
+
+In initPerson we are returning a reference to `m`. This would 
+normally cause issues because the functions would be removed from the stack after it 
+was ran, which would mean `m` wouldn't exist.
+
+In order to account for this, Go handles this and stores `m` into 
+a "heap" so that the variable is still able to be referenced. 
+
+The issue is that Go's garbage collector for the heap isn't as 
+nice, which means that it could possibly leave the variable in there 
+and affect the application's performance.
+
+
+
+** Async Handling **
+
+```go
+wg = sync.waitGroup {}
+
+wg.Add(1) // adds fn to be waited on
+myFn()
+
+func myFn() {
+  wg.Done() // lets us know that the wg.Add(1) has been completed
+}
+
+wg.Wait() // makes the application wait until all of the things added using
+          // wg.Add before doing anything below it
+```
+
+
+** Multithreading **
+
+```go
+func myFn() {
+  // async code happening
+}
+
+// Run the function without Multithreading
+myFn()
+
+// Run the function with Multithreading
+go myFn()
+```
