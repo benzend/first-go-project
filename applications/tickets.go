@@ -52,14 +52,25 @@ func TicketApp() {
 				}
 
 				bookings = append(bookings, userData)
+				
+				dontWait := ""
 
-				wg.Add(1)
-				go tickets.SendTicket(userTickets, userName, userEmail, wg)
-			
-				fmt.Println("Everyone who has booked so far:")
-				for _, booking := range bookings {
-					fmt.Println(booking.name)
+				fmt.Println("Would you like to buy more tickets while you wait? [y/n]")
+
+				fmt.Scan(&dontWait)
+
+				if dontWait == "y" {
+					wg.Add(1)
+					go tickets.SendTicket(userTickets, userName, userEmail, wg)
+				} else if dontWait == "n" {
+					tickets.SendTicket(userTickets, userName, userEmail, wg)
+				} else {
+					fmt.Println("You done fucked up boy")
+					continue
 				}
+
+				
+				
 			} else {
 				fmt.Println("Invalid details")
 				continue
@@ -71,7 +82,5 @@ func TicketApp() {
 			fmt.Println("That isn't a valid response")
 			continue
 		}
-		wg.Wait()
 	}
 }
-
