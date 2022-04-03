@@ -1,6 +1,7 @@
 package applications
 
 import (
+	characterUtil "first-project/util/character"
 	"fmt"
 	"time"
 )
@@ -58,7 +59,7 @@ func Start() {
 	time.Sleep(2 * time.Second)
 	fmt.Printf("Don't forget your %v!\n", character.primaryWeapon)
 	time.Sleep(1 * time.Second)
-	GenerateItem(character.primaryWeapon)
+	characterUtil.GenerateItem(character.primaryWeapon)
 	time.Sleep(2 * time.Second)
 	fmt.Println("Here is a summary of all of your stats!")
 	time.Sleep(1 * time.Second)
@@ -80,25 +81,3 @@ func GetCharacterDetails() (c Character) {
 	return c
 }
 
-func GenerateItem(item string) {
-	switch item {
-	case "sword":
-		fmt.Print(`
-     /\
-    /  \
-    |  |
-    |  |
-    |  |
-    |  |
-    |  | 
-    |  |
-----    ----
-    |  |
-    |  |
-    |__|
-		`)
-		fmt.Print("\n")
-	default:
-		fmt.Println("Looks like I don't have that item in stock :(")
-	}
-}
