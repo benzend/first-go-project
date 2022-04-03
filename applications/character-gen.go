@@ -5,6 +5,24 @@ import (
 	"time"
 )
 
+type Character struct {
+	name string 
+	height string 
+	build string
+	race string 
+	primaryWeapon string
+}
+
+func (c Character) Details() {
+	fmt.Printf("name: %v\nheight: %v\nbuild: %v\nrace: %v\nprimaryWeapon: %v\n", 
+		c.name, 
+		c.height, 
+		c.build, 
+		c.race, 
+		c.primaryWeapon,
+	)
+}
+
 func CharacterGenApp() {
 	fmt.Println("Welcome to the number gen application!")
 
@@ -23,7 +41,7 @@ func CharacterGenApp() {
 }
 
 func Start() {
-	name, height, build, race, primary := GetCharacterDetails()
+	character := GetCharacterDetails()
 
 	fmt.Print("Generating character")
 	time.Sleep(1 * time.Second)
@@ -36,30 +54,30 @@ func Start() {
 	fmt.Println("Character generated!")
 	time.Sleep(2 * time.Second)
 	
-	fmt.Printf("Welcome %v! \n", name)
+	fmt.Printf("Welcome %v! \n", character.name)
 	time.Sleep(2 * time.Second)
-	fmt.Printf("Don't forget your %v!\n", primary)
+	fmt.Printf("Don't forget your %v!\n", character.primaryWeapon)
 	time.Sleep(1 * time.Second)
-	GenerateItem(primary)
+	GenerateItem(character.primaryWeapon)
 	time.Sleep(2 * time.Second)
 	fmt.Println("Here is a summary of all of your stats!")
 	time.Sleep(1 * time.Second)
-	fmt.Printf("Height: %v\nBuild: %v\nRace: %v\n", height, build, race)
+	character.Details()
 }
 
-func GetCharacterDetails() (name string, height int, build string, race string, primary string) {
+func GetCharacterDetails() (c Character) {
 	fmt.Print("Name: ")
-	fmt.Scan(&name)
+	fmt.Scan(&c.name)
 	fmt.Print("Height: ")
-	fmt.Scan(&height)
+	fmt.Scan(&c.height)
 	fmt.Print("Build [strong/weak]: ")
-	fmt.Scan(&build)
+	fmt.Scan(&c.build)
 	fmt.Print("Race [dwarvish/human]: ")
-	fmt.Scan(&race)
+	fmt.Scan(&c.race)
 	fmt.Print("Primary weapon [sword/bow]: ")
-	fmt.Scan(&primary)
+	fmt.Scan(&c.primaryWeapon)
 
-	return name, height, build, race, primary
+	return c
 }
 
 func GenerateItem(item string) {
