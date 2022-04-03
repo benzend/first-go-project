@@ -1,4 +1,4 @@
-package character
+package util
 
 import "fmt"
 
@@ -22,15 +22,16 @@ func GenerateItem(item string) {
 		fmt.Print("\n")
 	case "bow":
 		fmt.Print(`
-		\\
-		 \\
-		  \\
-			 \\
-			  \\
-				 \\
-				  \\
-					 \\
-					  \\`)
+\\_____
+ \\    \_
+  \\     \_
+---\\------\--------->
+    \\      \
+     \\      \
+      \\     \
+       \\    \
+        \\___\
+		`)
 	default:
 		fmt.Println("Looks like I don't have that item in stock :(")
 	}
