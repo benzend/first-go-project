@@ -1,40 +1,46 @@
 package main
 
 import (
-	"first-project/applications"
-	"fmt"
+	"image/color"
+	"log"
+
+	"github.com/hajimehoshi/ebiten"
 )
 
-type App struct {
-	name string 
-	fn func()
+// Game implements ebiten.Game interface.
+type Game struct{}
+
+// Update proceeds the game state.
+// Update is called every tick (1/60 [s] by default).
+func (g *Game) Update(screen *ebiten.Image) error {
+    // Write your game's logical update.
+    return nil
 }
 
-var apps = []App{{name: "tickets", fn: applications.TicketApp}, {name: "character-gen", fn: applications.CharacterGenApp}}
+// Draw draws the game screen.
+// Draw is called every frame (typically 1/60[s] for 60Hz display).
+func (g *Game) Draw(screen *ebiten.Image) {
+    // Write your game's rendering.
+		color := color.White
+		screen.Set(10, 12, color)
+		screen.Set(9, 12, color)
+		screen.Set(10, 11, color)
+		screen.Set(9, 11, color)
+}
+
+// Layout takes the outside size (e.g., the window size) and returns the (logical) screen size.
+// If you don't have to adjust the screen size with the outside size, just return a fixed size.
+func (g *Game) Layout(outsideWidth, outsideHeight int) (screenWidth, screenHeight int) {
+    return 320, 240
+}
 
 func main() {
-	app := getChosenApp()
-	app.fn()
-}
-
-func getChosenApp() App {
-	path := ""
-	appsStr := ""
-
-	for _, app := range apps {
-		appsStr += "/" + app.name
-	}
-
-	fmt.Printf("Which application would you like to use? [%v]\n", appsStr)
-	fmt.Scan(&path)
-
-	// * Check if the selected path is a valid selection
-	for _, app := range apps {
-		if path == app.name {
-			return app
-		}
-	}
-	
-	fmt.Printf("\"%v\" is not a valid application, please try again.\n", path)
-	return getChosenApp()
+    game := &Game{}
+    // Specify the window size as you like. Here, a doubled size is specified.
+    ebiten.SetWindowSize(640, 480)
+    ebiten.SetWindowTitle("Your game's title")
+    // Call ebiten.RunGame to start your game loop.
+    if err := ebiten.RunGame(game); err != nil {
+        log.Fatal(err)
+    }
 }
